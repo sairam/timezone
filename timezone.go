@@ -2,7 +2,6 @@ package timezone
 
 import (
 	"errors"
-	"fmt"
 	"time"
 )
 
@@ -22,7 +21,7 @@ func GroupLocationByOffset() map[int][]Timezone {
 	for _, loc := range Locations {
 		l, err := time.LoadLocation(loc.Location)
 		if err != nil {
-			fmt.Println("bad location", loc.Location)
+			// fmt.Println("bad location", loc.Location)
 			continue
 		}
 		_, offset := time.Now().In(l).Zone()
