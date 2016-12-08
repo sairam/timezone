@@ -2,6 +2,7 @@ package timezone
 
 import (
 	"errors"
+	"fmt"
 	"time"
 )
 
@@ -14,6 +15,36 @@ func ValidLocation(s string) bool {
 		}
 	}
 	return false
+}
+
+func GroupLocationByOffset() map[int][]Timezone {
+	var z = make(map[int][]Timezone)
+	for _, loc := range Locations {
+		l, err := time.LoadLocation(loc.Location)
+		if err != nil {
+			fmt.Println("bad location", loc.Location)
+			continue
+		}
+		_, offset := time.Now().In(l).Zone()
+		z[offset] = append(z[offset], loc)
+	}
+	return z
+
+}
+
+func LocationsFromOffset(offset int) ([]Timezone, error) {
+	var z []Timezone
+	for _, loc := range Locations {
+		l, err := time.LoadLocation(loc.Location)
+		if err != nil {
+			continue
+		}
+		_, zoneOffset := time.Now().In(l).Zone()
+		if offset == zoneOffset {
+			z = append(z, loc)
+		}
+	}
+	return z, nil
 }
 
 // Offset returns the abbreviated name of the zone of l (such as "CET")

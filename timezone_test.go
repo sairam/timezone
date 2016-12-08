@@ -77,6 +77,17 @@ func TestOffset(t *testing.T) {
 	}
 }
 
+// func ExampleGroupLocationByOffset() {
+// 	fmt.Println(GroupLocationByOffset())
+//
+// }
+
+func ExampleLocationsFromOffset() {
+	locs, _ := LocationsFromOffset(19800)
+	fmt.Println(locs)
+	// Output: [{Asia/Calcutta IN India} {Asia/Colombo LK Sri Lanka} {Asia/Kolkata IN India}]
+}
+
 func ExampleOffset() {
 	zone, offset, _ := Offset("Europe/Helsinki")
 	fmt.Println(zone, offset)
